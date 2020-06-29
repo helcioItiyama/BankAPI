@@ -15,7 +15,7 @@ module.exports = {
     try{
       const { agencia, conta, deposit } = req.body;
       const accounts = await accountsModel.findOne({agencia, conta});
-      console.log(accounts)
+      
       if(!accounts) {
         res.status(400).send('Conta não encontrada');
       }
