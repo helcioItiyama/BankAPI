@@ -14,8 +14,8 @@ module.exports = {
   async deposit(req, res) {
     try{
       const { agencia, conta, deposit } = req.body;
-      const [accounts] = await accountsModel.find({agencia, conta});
-
+      const accounts = await accountsModel.findOne({agencia, conta});
+      console.log(accounts)
       if(!accounts) {
         res.status(400).send('Conta não encontrada');
       }
@@ -38,7 +38,7 @@ module.exports = {
     try {
       const fee = 1;
       const { agencia, conta, withdraw } = req.body;
-      const [accounts] = await accountsModel.find({agencia, conta});
+      const accounts = await accountsModel.findOne({agencia, conta});
 
       if(!accounts) {
         res.status(400).send('Conta não encontrada');
@@ -62,7 +62,7 @@ module.exports = {
     try{
       const { agencia, conta } = req.body;
        
-      const [accounts] = await accountsModel.find({agencia, conta});
+      const accounts = await accountsModel.findOne({agencia, conta});
    
       if(!accounts) {
         res.status(400).send('Conta não encontrada');
@@ -80,7 +80,7 @@ module.exports = {
     try{
       const { agencia, conta } = req.body;
 
-      const accounts = await accountsModel.deleteMany({agencia, conta});
+      const accounts = await accountsModel.findOneAndDelete({agencia, conta});
 
       if(!accounts) {
         res.status(400).send('Conta não encontrada');
@@ -100,12 +100,12 @@ module.exports = {
       const { sourceAccount, destinationAccount, transferValue } = req.body;
       const fee = 8;
 
-      const [source] = await accountsModel.find({conta: sourceAccount});
+      const source = await accountsModel.findOne({conta: sourceAccount});
       if(!source) {
         res.status(400).send('Conta de origem não encontrada');
       }
 
-      const [destination] = await accountsModel.find({conta: destinationAccount});
+      const destination = await accountsModel.findOne({conta: destinationAccount});
       if(!destination) {
         res.status(400).send('Conta destino não encontrada');
       }
